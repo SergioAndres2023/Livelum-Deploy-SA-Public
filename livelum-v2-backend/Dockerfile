@@ -47,9 +47,15 @@ FROM builder AS installer
 
 ARG APP_ENV=production
 
-COPY package.json package-lock.json ./
+COPY package.json ./
+COPY package-lock.json* ./
 
-RUN --mount=type=secret,id=npmrc,target=/usr/src/app/.npmrc,uid=${USER_ID} npm ci
+RUN --mount=type=secret,id=npmrc,target=/usr/src/app/.npmrc,uid=${USER_ID} \
+    if [ -f package-lock.json ]; then \
+        npm ci; \
+    else \
+        npm install; \
+    fi
 
 COPY . .
 RUN npm run build
