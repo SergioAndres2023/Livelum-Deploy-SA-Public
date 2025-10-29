@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: livelum-v2-backend
+    runtime: docker
+    plan: starter
+    rootDir: livelum-v2-backend
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        fromService:
+          name: livelum-v2-backend
+          type: web
+          property: port
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRES_IN
+        value: 24h
+      - key: DOMAIN
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+    healthCheckPath: /health
+    dockerfilePath: livelum-v2-backend/Dockerfile
+
