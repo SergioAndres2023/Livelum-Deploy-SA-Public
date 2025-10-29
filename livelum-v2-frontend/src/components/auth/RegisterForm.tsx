@@ -68,10 +68,15 @@ export default function RegisterForm() {
       if (error) {
         if (isMountedRef.current) {
           setIsLoading(false);
-          toast({
-            variant: "destructive",
-            title: "Error de registro",
-            description: error.message || "No se pudo crear el usuario. Verifica que el email no esté en uso.",
+          // Usar console.error en lugar de toast para evitar problemas de renderizado
+          console.error("Error de registro:", error.message);
+          // Navegar al login con mensaje de error
+          navigate("/login", {
+            replace: true,
+            state: {
+              error: true,
+              message: error.message || "No se pudo crear el usuario. Verifica que el email no esté en uso."
+            }
           });
         }
         return;
@@ -94,10 +99,13 @@ export default function RegisterForm() {
       console.error("Error en registro:", error);
       if (isMountedRef.current) {
         setIsLoading(false);
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: error instanceof Error ? error.message : "Ocurrió un error inesperado",
+        // Navegar al login con mensaje de error en lugar de toast
+        navigate("/login", {
+          replace: true,
+          state: {
+            error: true,
+            message: error instanceof Error ? error.message : "Ocurrió un error inesperado"
+          }
         });
       }
     }

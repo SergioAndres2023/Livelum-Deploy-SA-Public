@@ -22,23 +22,13 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Mostrar mensaje de éxito si viene del registro
-  useEffect(() => {
-    const state = location.state as { registered?: boolean; message?: string; username?: string } | null;
-    if (state?.registered && state?.message) {
-      // Usar setTimeout para asegurar que el componente está completamente montado
-      const timer = setTimeout(() => {
-        toast({
-          title: "Usuario registrado",
-          description: state.message,
-        });
-      }, 100);
-      // Limpiar el estado de navegación
-      window.history.replaceState({}, '', location.pathname);
-      return () => clearTimeout(timer);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Solo ejecutar una vez al montar
+  // Mostrar mensaje de éxito/error si viene del registro (solo mostrar en la UI, sin toast)
+  const registrationState = location.state as { 
+    registered?: boolean; 
+    error?: boolean;
+    message?: string; 
+    username?: string;
+  } | null;
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -120,6 +110,21 @@ export default function LoginForm() {
             <CardDescription>
               Ingresa tus credenciales para acceder al sistema
             </CardDescription>
+            {registrationState?.message && (
+              <div className={`mt-4 p-3 border rounded-md ${
+                registrationState.error 
+                  ? "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800" 
+                  : "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800"
+              }`}>
+                <p className={`text-sm font-medium ${
+                  registrationState.error
+                    ? "text-red-800 dark:text-red-200"
+                    : "text-green-800 dark:text-green-200"
+                }`}>
+                  {registrationState.message}
+                </p>
+              </div>
+            )}
           </CardHeader>
           <CardContent>
             <Form {...form}>
