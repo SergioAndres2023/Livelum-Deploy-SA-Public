@@ -25,14 +25,10 @@ export default function RegisterForm() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const isMountedRef = useRef(true);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   
   useEffect(() => {
     return () => {
       isMountedRef.current = false;
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
     };
   }, []);
 
@@ -81,20 +77,18 @@ export default function RegisterForm() {
         return;
       }
 
-      // Mostrar toast y navegar de forma segura
+      // Navegar inmediatamente con mensaje de éxito en el estado
       if (isMountedRef.current) {
-        toast({
-          title: "Usuario registrado",
-          description: `Usuario creado exitosamente. Contraseña inicial: ${values.username}`,
+        setIsLoading(false);
+        // Navegar con el mensaje en el estado para evitar problemas de renderizado
+        navigate("/login", { 
+          replace: true,
+          state: { 
+            registered: true, 
+            username: values.username,
+            message: `Usuario registrado exitosamente. Contraseña inicial: ${values.username}`
+          } 
         });
-        
-        // Navegar después de un pequeño delay para que el toast se muestre
-        timeoutRef.current = setTimeout(() => {
-          if (isMountedRef.current) {
-            setIsLoading(false);
-            navigate("/login", { replace: true });
-          }
-        }, 500);
       }
     } catch (error) {
       console.error("Error en registro:", error);

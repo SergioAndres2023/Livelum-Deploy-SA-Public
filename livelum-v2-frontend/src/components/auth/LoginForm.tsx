@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -20,6 +20,25 @@ export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Mostrar mensaje de éxito si viene del registro
+  useEffect(() => {
+    const state = location.state as { registered?: boolean; message?: string; username?: string } | null;
+    if (state?.registered && state?.message) {
+      // Usar setTimeout para asegurar que el componente está completamente montado
+      const timer = setTimeout(() => {
+        toast({
+          title: "Usuario registrado",
+          description: state.message,
+        });
+      }, 100);
+      // Limpiar el estado de navegación
+      window.history.replaceState({}, '', location.pathname);
+      return () => clearTimeout(timer);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Solo ejecutar una vez al montar
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
