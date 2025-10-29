@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,6 +24,17 @@ export default function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const isMountedRef = useRef(true);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  
+  useEffect(() => {
+    return () => {
+      isMountedRef.current = false;
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -59,31 +70,42 @@ export default function RegisterForm() {
       });
 
       if (error) {
-        toast({
-          variant: "destructive",
-          title: "Error de registro",
-          description: error.message || "No se pudo crear el usuario. Verifica que el email no esté en uso.",
-        });
-        setIsLoading(false);
+        if (isMountedRef.current) {
+          setIsLoading(false);
+          toast({
+            variant: "destructive",
+            title: "Error de registro",
+            description: error.message || "No se pudo crear el usuario. Verifica que el email no esté en uso.",
+          });
+        }
         return;
       }
 
-      // Pequeño delay para evitar problemas de renderizado
-      setTimeout(() => {
+      // Mostrar toast y navegar de forma segura
+      if (isMountedRef.current) {
         toast({
           title: "Usuario registrado",
           description: `Usuario creado exitosamente. Contraseña inicial: ${values.username}`,
         });
-        navigate("/login");
-      }, 100);
+        
+        // Navegar después de un pequeño delay para que el toast se muestre
+        timeoutRef.current = setTimeout(() => {
+          if (isMountedRef.current) {
+            setIsLoading(false);
+            navigate("/login", { replace: true });
+          }
+        }, 500);
+      }
     } catch (error) {
       console.error("Error en registro:", error);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: error instanceof Error ? error.message : "Ocurrió un error inesperado",
-      });
-      setIsLoading(false);
+      if (isMountedRef.current) {
+        setIsLoading(false);
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: error instanceof Error ? error.message : "Ocurrió un error inesperado",
+        });
+      }
     }
   };
 
