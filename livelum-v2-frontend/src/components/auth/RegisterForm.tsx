@@ -15,7 +15,7 @@ import { Loader2, ArrowLeft } from "lucide-react";
 const registerSchema = z.object({
   email: z.string().email("Email inválido"),
   fullName: z.string().min(2, "Nombre completo requerido"),
-  username: z.string().min(3, "Usuario debe tener al menos 3 caracteres"),
+  username: z.string().min(6, "Usuario debe tener al menos 6 caracteres (se usará como contraseña inicial)"),
   position: z.string().min(2, "Posición requerida"),
   profileId: z.string(),
 });
@@ -40,7 +40,10 @@ export default function RegisterForm() {
     setIsLoading(true);
     try {
       // Password inicial = username (según briefing)
-      const initialPassword = values.username;
+      // Asegurar que la contraseña tenga al menos 6 caracteres (requisito de Supabase)
+      const initialPassword = values.username.length >= 6 
+        ? values.username
+        : values.username + "123"; // Agregar caracteres si es muy corta
       
       const { data, error } = await supabase.auth.signUp({
         email: values.email,
@@ -59,24 +62,27 @@ export default function RegisterForm() {
         toast({
           variant: "destructive",
           title: "Error de registro",
-          description: error.message,
+          description: error.message || "No se pudo crear el usuario. Verifica que el email no esté en uso.",
         });
+        setIsLoading(false);
         return;
       }
 
-      toast({
-        title: "Usuario registrado",
-        description: `Usuario creado exitosamente. Contraseña inicial: ${initialPassword}`,
-      });
-
-      navigate("/login");
+      // Pequeño delay para evitar problemas de renderizado
+      setTimeout(() => {
+        toast({
+          title: "Usuario registrado",
+          description: `Usuario creado exitosamente. Contraseña inicial: ${values.username}`,
+        });
+        navigate("/login");
+      }, 100);
     } catch (error) {
+      console.error("Error en registro:", error);
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Ocurrió un error inesperado",
+        description: error instanceof Error ? error.message : "Ocurrió un error inesperado",
       });
-    } finally {
       setIsLoading(false);
     }
   };
@@ -159,7 +165,7 @@ export default function RegisterForm() {
                       </FormControl>
                       <FormMessage />
                       <p className="text-xs text-muted-foreground">
-                        La contraseña inicial será igual al nombre de usuario
+                        La contraseña inicial será igual al nombre de usuario (mínimo 6 caracteres)
                       </p>
                     </FormItem>
                   )}
