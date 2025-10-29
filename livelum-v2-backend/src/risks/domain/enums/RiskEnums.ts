@@ -1,0 +1,36 @@
+export enum RiskCategory {
+  TECNOLOGICO = 'TECNOLOGICO',
+  RECURSOS_HUMANOS = 'RECURSOS_HUMANOS',
+  REGULATORIO = 'REGULATORIO',
+  OPERACIONAL = 'OPERACIONAL',
+  FINANCIERO = 'FINANCIERO',
+  ESTRATEGICO = 'ESTRATEGICO',
+  COMPLIANCE = 'COMPLIANCE',
+  SEGURIDAD = 'SEGURIDAD'
+}
+
+export enum RiskProbability {
+  BAJA = 'BAJA',
+  MEDIA = 'MEDIA',
+  ALTA = 'ALTA'
+}
+
+export enum RiskImpact {
+  BAJO = 'BAJO',
+  MEDIO = 'MEDIO',
+  ALTO = 'ALTO'
+}
+
+export enum RiskLevel {
+  BAJO = 'BAJO',
+  MEDIO = 'MEDIO',
+  ALTO = 'ALTO',
+  CRITICO = 'CRITICO'
+}
+
+export enum RiskStatus {
+  ACTIVE = 'ACTIVE',
+  MONITORED = 'MONITORED',
+  MITIGATED = 'MITIGATED',
+  CLOSED = 'CLOSED'
+}

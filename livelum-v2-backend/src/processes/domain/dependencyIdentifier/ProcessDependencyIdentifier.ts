@@ -1,0 +1,40 @@
+export enum ProcessDependencyIdentifier {
+  // ProcessType
+  ProcessTypeRepository = 'ProcessTypeRepository',
+  CreateProcessTypeUseCase = 'CreateProcessTypeUseCase',
+  FindProcessTypeByIdUseCase = 'FindProcessTypeByIdUseCase',
+  GetAllProcessTypesUseCase = 'GetAllProcessTypesUseCase',
+  UpdateProcessTypeUseCase = 'UpdateProcessTypeUseCase',
+  DeleteProcessTypeUseCase = 'DeleteProcessTypeUseCase',
+  ReorderProcessTypesUseCase = 'ReorderProcessTypesUseCase',
+
+  // ProcessName
+  ProcessNameRepository = 'ProcessNameRepository',
+  CreateProcessNameUseCase = 'CreateProcessNameUseCase',
+  FindProcessNameByIdUseCase = 'FindProcessNameByIdUseCase',
+  GetProcessNamesByTypeUseCase = 'GetProcessNamesByTypeUseCase',
+  GetAllProcessNamesUseCase = 'GetAllProcessNamesUseCase',
+  UpdateProcessNameUseCase = 'UpdateProcessNameUseCase',
+  DeleteProcessNameUseCase = 'DeleteProcessNameUseCase',
+  ReorderProcessNamesUseCase = 'ReorderProcessNamesUseCase',
+
+  // ProcessSheet
+  ProcessSheetRepository = 'ProcessSheetRepository',
+  CreateProcessSheetUseCase = 'CreateProcessSheetUseCase',
+  FindProcessSheetByIdUseCase = 'FindProcessSheetByIdUseCase',
+  FindProcessSheetByCodeUseCase = 'FindProcessSheetByCodeUseCase',
+  SearchProcessSheetsUseCase = 'SearchProcessSheetsUseCase',
+  UpdateProcessSheetUseCase = 'UpdateProcessSheetUseCase',
+  DeleteProcessSheetUseCase = 'DeleteProcessSheetUseCase',
+  AuthorizeProcessSheetUseCase = 'AuthorizeProcessSheetUseCase',
+  ArchiveProcessSheetUseCase = 'ArchiveProcessSheetUseCase',
+  GetProcessSheetStatsUseCase = 'GetProcessSheetStatsUseCase',
+  GetProcessSheetVersionHistoryUseCase = 'GetProcessSheetVersionHistoryUseCase',
+  GetLatestProcessSheetVersionUseCase = 'GetLatestProcessSheetVersionUseCase',
+  LinkIndicatorToProcessUseCase = 'LinkIndicatorToProcessUseCase',
+  LinkDocumentToProcessUseCase = 'LinkDocumentToProcessUseCase',
+  LinkRiskToProcessUseCase = 'LinkRiskToProcessUseCase',
+  LinkOpportunityToProcessUseCase = 'LinkOpportunityToProcessUseCase',
+  LinkEquipmentToProcessUseCase = 'LinkEquipmentToProcessUseCase',
+  LinkSupplierToProcessUseCase = 'LinkSupplierToProcessUseCase',
+}

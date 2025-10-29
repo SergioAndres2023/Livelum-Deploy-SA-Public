@@ -1,0 +1,12 @@
+export enum ProcessStatus {
+  BORRADOR = 'BORRADOR',
+  AUTORIZADO = 'AUTORIZADO',
+  ARCHIVADO = 'ARCHIVADO',
+}
+
+export enum ProcessTypeCategory {
+  ESTRATEGICOS = 'ESTRATEGICOS',
+  FABRICACION = 'FABRICACION',
+  OPERATIVOS = 'OPERATIVOS',
+  APOYO = 'APOYO',
+}

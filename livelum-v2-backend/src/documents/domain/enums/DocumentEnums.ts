@@ -1,0 +1,14 @@
+export enum DocumentType {
+  MANUAL = 'MANUAL',
+  POLITICA = 'POLITICA',
+  FORMATO = 'FORMATO',
+  PROCEDIMIENTO = 'PROCEDIMIENTO',
+}
+
+export enum DocumentStatus {
+  BORRADOR = 'BORRADOR',
+  EN_REVISION = 'EN_REVISION',
+  APROBADO = 'APROBADO',
+  VENCIDO = 'VENCIDO',
+  ELIMINADO = 'ELIMINADO',
+}

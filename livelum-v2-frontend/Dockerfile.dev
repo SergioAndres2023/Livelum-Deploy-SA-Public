@@ -1,0 +1,19 @@
+# Imagen de desarrollo para Vite React con hot-reload
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Instalar dependencias
+COPY package*.json ./
+RUN npm ci
+
+# Copiamos el resto solo para build inicial (será montado por volumen en runtime)
+COPY . .
+
+# Puerto del server de Vite (configurado en vite.config.ts)
+EXPOSE 8080
+
+# Comando por defecto: servidor de desarrollo con HMR
+CMD ["npm", "run", "dev"]
+
+

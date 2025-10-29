@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Sistema de Gestión Documental - Estética Minimalista
+Colores: Fondo blanco, acentos azul Bootstrap (#0d6efd)
+*/
+
+@layer base {
+  :root {
+    /* Primary colors - Modern Blue theme */
+    --primary: 213 94% 60%;
+    --primary-foreground: 0 0% 98%;
+    
+    /* Secondary and neutral colors */
+    --secondary: 213 15% 95%;
+    --secondary-foreground: 213 94% 20%;
+    
+    /* Background and surface colors */
+    --background: 240 20% 97%;
+    --foreground: 213 94% 20%;
+    
+    /* Muted colors for subtle elements */
+    --muted: 240 10% 95%;
+    --muted-foreground: 240 15% 47%;
+    
+    /* Accent colors for highlights */
+    --accent: 240 10% 95%;
+    --accent-foreground: 213 94% 20%;
+    
+    /* Destructive colors for errors/warnings */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    
+    /* Status colors */
+    --success: 142 76% 36%;
+    --warning: 45 93% 58%;
+    --info: 200 98% 39%;
+    
+    /* Border and input colors */
+    --border: 240 15% 91%;
+    --input: 240 15% 91%;
+    --ring: 213 94% 60%;
+    
+    /* Card styling */
+    --card: 0 0% 100%;
+    --card-foreground: 213 94% 20%;
+    
+    /* Popover colors */
+    --popover: 0 0% 100%;
+    --popover-foreground: 213 94% 20%;
+    
+    /* Chart colors */
+    --chart-1: 213 94% 60%;
+    --chart-2: 200 90% 55%;
+    --chart-3: 190 85% 50%;
+    --chart-4: 180 80% 55%;
+    --chart-5: 170 75% 60%;
+    
+    /* Sidebar colors */
+    --sidebar-background: 213 94% 60%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 0 0% 98%;
+    --sidebar-primary-foreground: 213 94% 60%;
+    --sidebar-accent: 213 90% 55%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 213 90% 55%;
+    --sidebar-ring: 0 0% 98%;
+    
+    /* Additional design tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(213 94% 60%), hsl(200 90% 55%));
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(240 20% 98%));
+    --shadow-card: 0 4px 20px -8px hsl(213 94% 60% / 0.15);
+    --shadow-elevated: 0 8px 30px -12px hsl(213 94% 60% / 0.25);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    /* Primary colors in dark mode */
+    --primary: 213 94% 65%;
+    --primary-foreground: 213 15% 5%;
+    
+    /* Background and surface colors */
+    --background: 213 15% 5%;
+    --foreground: 240 10% 95%;
+    
+    /* Card and surface colors */
+    --card: 213 15% 8%;
+    --card-foreground: 240 10% 95%;
+    
+    /* Muted colors */
+    --muted: 213 10% 17%;
+    --muted-foreground: 240 15% 65%;
+    
+    /* Accent colors */
+    --accent: 213 10% 17%;
+    --accent-foreground: 240 10% 95%;
+    
+    /* Border and input colors */
+    --border: 213 10% 17%;
+    --input: 213 10% 17%;
+    
+    /* Popover colors */
+    --popover: 213 15% 8%;
+    --popover-foreground: 240 10% 95%;
+    
+    /* Chart colors for dark mode */
+    --chart-1: 213 94% 65%;
+    --chart-2: 200 90% 60%;
+    --chart-3: 190 85% 55%;
+    --chart-4: 180 80% 60%;
+    --chart-5: 170 75% 65%;
+    
+    /* Sidebar colors in dark mode */
+    --sidebar-background: 213 15% 8%;
+    --sidebar-foreground: 240 10% 95%;
+    --sidebar-primary: 213 94% 65%;
+    --sidebar-primary-foreground: 240 10% 95%;
+    --sidebar-accent: 213 15% 15%;
+    --sidebar-accent-foreground: 240 10% 95%;
+    --sidebar-border: 213 15% 15%;
+    --sidebar-ring: 213 94% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-feature-settings: "cv11", "ss01";
+    font-variation-settings: "opsz" 32;
+  }
+}
+
+@layer components {
+  /* Component Styles */
+  .card-minimal {
+    @apply bg-card border-0 rounded-xl;
+    box-shadow: var(--shadow-card);
+    background: var(--gradient-card);
+  }
+
+  .chart-card {
+    @apply bg-card border-0 rounded-xl p-6;
+    box-shadow: var(--shadow-card);
+    background: var(--gradient-card);
+  }
+
+  .stat-card {
+    @apply bg-card border-0 rounded-xl p-6;
+    box-shadow: var(--shadow-card);
+    background: var(--gradient-card);
+    transition: var(--transition-smooth);
+  }
+
+  .stat-card:hover {
+    box-shadow: var(--shadow-elevated);
+    transform: translateY(-2px);
+  }
+
+  .sidebar-minimal {
+    background: var(--gradient-primary);
+    box-shadow: 4px 0 20px -8px hsl(var(--primary) / 0.3);
+  }
+
+  .progress-ring {
+    stroke: hsl(var(--primary));
+    stroke-linecap: round;
+    transition: var(--transition-smooth);
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Estilos específicos para toasts */
+[data-sonner-toast][data-type="error"] {
+  background-color: #f87171 !important;
+  color: white !important;
+  border: 1px solid #fca5a5 !important;
+}
+
+[data-sonner-toast][data-type="error"] [data-description] {
+  color: white !important;
+}
+
+[data-sonner-toast][data-type="success"] {
+  background-color: #34d399 !important;
+  color: white !important;
+  border: 1px solid #6ee7b7 !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-description] {
+  color: white !important;
+}
